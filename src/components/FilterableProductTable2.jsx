@@ -19,36 +19,25 @@ class FilterableProductTable extends Component {
     this.setState({
       search: search,
     });
-    this.triggerFiltering({
-      search: search,
-      stockCheck: this.state.stockCheck,
-    });
   };
 
   checkStockOnly = (value) => {
     this.setState({
       stockCheck: value,
     });
-    this.triggerFiltering({
-      search: this.state.search,
-      stockCheck: value,
-    });
   };
 
-  triggerFiltering = ({ search, stockCheck }) => {
-    const filteredList = this.state.list.filter((product) => {
-      if (stockCheck && !product.stocked) {
+  render() {
+    let search = this.state.search;
+    let filteredProducts = this.props.products;
+
+    filteredProducts = this.props.products.filter((product) => {
+      if (this.state.stockCheck && !product.stocked) {
         return false;
       }
       return product.name.toLowerCase().includes(search.toLowerCase());
     });
 
-    this.setState({
-      filteredList: filteredList,
-    });
-  };
-
-  render() {
     return (
       <div>
         <h1>FilterableProductTable</h1>
@@ -56,7 +45,7 @@ class FilterableProductTable extends Component {
           onSearchBar={this.updateListonSearch}
           onCheckbox={this.checkStockOnly}
         />
-        <ProductTable products={this.state.filteredList} />
+        <ProductTable products={filteredProducts} />
       </div>
     );
   }
