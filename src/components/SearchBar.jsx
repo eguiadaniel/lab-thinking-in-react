@@ -10,28 +10,25 @@ export class SearchBar extends Component {
 
   handleSearchInputChange = (e) => {
     const value = e.target.value;
-
     this.setState({
       search : value
+      
     })
-
-    this.props.onSearchBar(this.state.search)
+    this.props.onSearchBar(e.target.value)
   }
   
   handleCheckboxInputChange = (e) => {
     const checked = e.target.checked;
-    const name = e.target.name;
-    
+    console.log(checked)
     this.setState({
       stockCheck : checked
-    })
-    this.props.onCheckBox(this.state.stockCheck)
-
+    });
+    this.props.onCheckbox(e.target.checked)
   }
 
   render() {
     return (
-      <fieldset>
+      <div>
         <input
           name="q"
           value={this.state.search}
@@ -43,12 +40,12 @@ export class SearchBar extends Component {
         type="checkbox"
         id="stockCheck" 
         name="stockCheck" 
-        value={this.state.stockCheck}
+        checked={this.state.stockCheck}
         onChange={this.handleCheckboxInputChange} /> 
-        <label for="stockCheck" >Only show products in stock</label>     
+        <label htmlFor="stockCheck" >Only show products in stock</label>     
 
         </div>
-      </fieldset>
+      </div>
     )
   }
 }
